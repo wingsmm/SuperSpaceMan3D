@@ -25,18 +25,43 @@ class GameViewController: UIViewController {
         floorNode.geometry!.firstMaterial!.diffuse.contents = "Floor"
         return floorNode
     }
+    
+    
+    func createStartingText()->SCNNode {
+        
+        
+        let startText = SCNText(string: "Start!", extrusionDepth: 5)
+        startText.chamferRadius = 0.5
+        startText.flatness = 0.3
+        startText.font = UIFont(name: "Copperplate", size: 30)
+        startText.firstMaterial?.specular.contents = UIColor.blueColor()
+        startText.firstMaterial?.shininess = 0.4
+
+        
+        let textNode = SCNNode(geometry: startText)
+        textNode.scale = SCNVector3Make(0.75, 0.75, 0.75)
+        textNode.position = SCNVector3Make(200, 0, 1000)
+        
+        return textNode
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let mainScene = createMainScene()
         mainScene.rootNode.addChildNode(setupFloor())
+        mainScene.rootNode.addChildNode(createStartingText())
+        mainScene.rootNode.addChildNode(Obstacle.PyramidNode())
+
+
         let sceneView = self.view as! SCNView
         sceneView.scene = mainScene
         
         sceneView.showsStatistics = true
         sceneView.allowsCameraControl = true
         
+
 
     }
     

@@ -14,6 +14,7 @@
 		1A34F6FD1B3650E2001B8476 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A34F6FC1B3650E2001B8476 /* Images.xcassets */; };
 		1A34F7001B3650E2001B8476 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A34F6FE1B3650E2001B8476 /* LaunchScreen.xib */; };
 		1A34F70C1B3650E2001B8476 /* SuperSpaceMan3DTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A34F70B1B3650E2001B8476 /* SuperSpaceMan3DTests.swift */; };
+		1A34F74A1B36652E001B8476 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A34F7491B36652E001B8476 /* Obstacle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		1A34F7051B3650E2001B8476 /* SuperSpaceMan3DTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuperSpaceMan3DTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A34F70A1B3650E2001B8476 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A34F70B1B3650E2001B8476 /* SuperSpaceMan3DTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperSpaceMan3DTests.swift; sourceTree = "<group>"; };
+		1A34F7491B36652E001B8476 /* Obstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				1A34F6FC1B3650E2001B8476 /* Images.xcassets */,
 				1A34F6FE1B3650E2001B8476 /* LaunchScreen.xib */,
 				1A34F6F11B3650E1001B8476 /* Supporting Files */,
+				1A34F7491B36652E001B8476 /* Obstacle.swift */,
 			);
 			path = SuperSpaceMan3D;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			files = (
 				1A34F6F81B3650E2001B8476 /* GameViewController.swift in Sources */,
 				1A34F6F41B3650E1001B8476 /* AppDelegate.swift in Sources */,
+				1A34F74A1B36652E001B8476 /* Obstacle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +417,7 @@
 				1A34F7111B3650E2001B8476 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1A34F7121B3650E2001B8476 /* Build configuration list for PBXNativeTarget "SuperSpaceMan3DTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +426,7 @@
 				1A34F7141B3650E2001B8476 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
