@@ -12,6 +12,10 @@ import SceneKit
 class Obstacle {
     
     
+    /**
+        金字塔
+    */
+    
     class func PyramidNode() -> SCNNode {
         
         let pyramid = SCNPyramid(width: 10.0, height: 20.0, length: 10.0)
@@ -24,6 +28,10 @@ class Obstacle {
         return pyramidNode
     }
     
+    
+    /**
+    球体
+    */
     class func GlobeNode() -> SCNNode {
         
         let globe = SCNSphere(radius: 15.0)
@@ -34,6 +42,10 @@ class Obstacle {
         return globeNode
     }
     
+    
+    /**
+    箱子
+    */
     
     class func BoxNode() -> SCNNode {
         
@@ -47,6 +59,10 @@ class Obstacle {
         
     }
     
+    /**
+    金属管
+    */
+    
     class func TubeNode() -> SCNNode {
         
         let tube = SCNTube(innerRadius: 10, outerRadius: 14, height: 20)
@@ -58,6 +74,10 @@ class Obstacle {
         return tubeNode
     }
     
+    /**
+    圆柱体
+    
+    */
     
     class func CylinderNode() -> SCNNode {
         
@@ -68,6 +88,10 @@ class Obstacle {
         return cylinderNode
         
     }
+    
+    /**
+    金属圈
+    */
     
     class func TorusNode() -> SCNNode {
         

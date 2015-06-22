@@ -12,11 +12,8 @@ import SceneKit
 
 class GameViewController: UIViewController {
     
+    var spotLight : SCNNode!
     
-    func createMainScene () ->SCNScene {
-        var mainScene = SCNScene(named: "art.scnassets/hero.dae")
-        return mainScene!
-    }
     
     func setupFloor() ->SCNNode {
         var floorNode = SCNNode()
@@ -45,24 +42,61 @@ class GameViewController: UIViewController {
         return textNode
         
     }
+    
+    
+    
+    func setupLighting(scene:SCNScene){
+        
+        
+        var ambientLight = SCNNode()
+        ambientLight.light = SCNLight()
+        ambientLight.light!.type = SCNLightTypeAmbient
+        ambientLight.light!.color = UIColor(white: 0.3, alpha: 1.0)
+        scene.rootNode.addChildNode(ambientLight)
+        
+        
+        var lightNode = SCNNode()
+        lightNode.light = SCNLight()
+        lightNode.light!.type = SCNLightTypeSpot
+        lightNode.light!.color = UIColor(white: 0.8, alpha: 1)
+        lightNode.position = SCNVector3Make(0, 80, 30)
+        lightNode.rotation = SCNVector4Make(1, 0, 0,Float(-M_1_PI/2.8))
+        lightNode.light!.spotInnerAngle = 0
+        lightNode.light!.spotOuterAngle=50
+        lightNode.light!.shadowColor = UIColor.blackColor()
+        lightNode.light!.zFar = 500
+        lightNode.light!.zNear = 50
+        
+        scene.rootNode.addChildNode(lightNode)
+        
+        spotLight = lightNode
+    }
+    
+    
+    
+    func createMainScene () ->SCNScene {
+        var mainScene = SCNScene(named: "art.scnassets/hero.dae")
+        setupLighting(mainScene!)
+        return mainScene!
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         let mainScene = createMainScene()
         mainScene.rootNode.addChildNode(setupFloor())
         mainScene.rootNode.addChildNode(createStartingText())
         mainScene.rootNode.addChildNode(Obstacle.PyramidNode())
-
-
+        
         let sceneView = self.view as! SCNView
         sceneView.scene = mainScene
         
+        // Optional, but nice to be turned on during developement
         sceneView.showsStatistics = true
         sceneView.allowsCameraControl = true
         
-
-
     }
     
 

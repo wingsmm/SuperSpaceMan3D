@@ -84,11 +84,11 @@
 				1A34F6F31B3650E1001B8476 /* AppDelegate.swift */,
 				1A34F6F51B3650E2001B8476 /* art.scnassets */,
 				1A34F6F71B3650E2001B8476 /* GameViewController.swift */,
-				1A34F6F91B3650E2001B8476 /* Main.storyboard */,
 				1A34F6FC1B3650E2001B8476 /* Images.xcassets */,
 				1A34F6FE1B3650E2001B8476 /* LaunchScreen.xib */,
-				1A34F6F11B3650E1001B8476 /* Supporting Files */,
+				1A34F6F91B3650E2001B8476 /* Main.storyboard */,
 				1A34F7491B36652E001B8476 /* Obstacle.swift */,
+				1A34F6F11B3650E1001B8476 /* Supporting Files */,
 			);
 			path = SuperSpaceMan3D;
 			sourceTree = "<group>";
