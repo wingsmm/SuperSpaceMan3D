@@ -4,8 +4,8 @@
   <contributor>
    <authoring_tool>SceneKit Collada Exporter v1.0</authoring_tool>
   </contributor>
-  <created>2015-03-14T17:09:02Z</created>
-  <modified>2015-03-14T17:09:02Z</modified>
+  <created>2015-06-22T06:48:42Z</created>
+  <modified>2015-06-22T06:48:42Z</modified>
   <unit meter="0.010000"/>
   <up_axis>Y_UP</up_axis>
  </asset>
@@ -125,7 +125,7 @@
  <library_visual_scenes>
   <visual_scene id="scene7">
    <node id="polySurface12" name="enemy">
-    <matrix>0.520427 0 0 5.407677 0 0.520427 0 3.565193 0 0 0.520427 0 0 0 0 1 </matrix>
+    <matrix>0.520427 0 0 5.407677 0 0.520427 0 3.565193 0 0 0.520427 0.938298 0 0 0 1 </matrix>
     <instance_geometry url="#polySurface12-lib">
      <bind_material>
       <technique_common>

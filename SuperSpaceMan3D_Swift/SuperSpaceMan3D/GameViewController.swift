@@ -13,7 +13,7 @@ import SceneKit
 class GameViewController: UIViewController {
     
     var spotLight : SCNNode!
-    
+    var cameraNode: SCNNode!
     
     func setupFloor() ->SCNNode {
         var floorNode = SCNNode()
@@ -33,7 +33,7 @@ class GameViewController: UIViewController {
         startText.font = UIFont(name: "Copperplate", size: 30)
         startText.firstMaterial?.specular.contents = UIColor.blueColor()
         startText.firstMaterial?.shininess = 0.4
-
+        
         
         let textNode = SCNNode(geometry: startText)
         textNode.scale = SCNVector3Make(0.75, 0.75, 0.75)
@@ -72,69 +72,67 @@ class GameViewController: UIViewController {
         spotLight = lightNode
     }
     
+    func setupCameras(scene:SCNScene) {
+        cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        cameraNode.camera!.zFar = 500
+        cameraNode.position = SCNVector3(x: 0.0, y: 50.0, z: 100)
+        cameraNode.rotation = SCNVector4(x: 1.0, y: 0.0, z: 0.0, w: Float(-M_PI_4*0.5))
+        scene.rootNode.addChildNode(cameraNode)
+    }
     
     
     func createMainScene () ->SCNScene {
-        var mainScene = SCNScene(named: "art.scnassets/hero.dae")
-        setupLighting(mainScene!)
-        return mainScene!
-    }
-
-
-    override func viewDidLoad() {
-        
-        
-        
-        
-        
-        super.viewDidLoad()
-        
-        
-        let mainScene = createMainScene()
-        
-
-        mainScene.rootNode.addChildNode(setupFloor())
-        mainScene.rootNode.addChildNode(createStartingText())
-        
-        
-        
-        let sceneView = self.view as! SCNView
-        sceneView.scene = mainScene
-        
-        sceneView.showsStatistics = true
-        sceneView.allowsCameraControl = true
-        
-        
-        
-        var globe = Obstacle.GlobeNode()
-        mainScene.rootNode.addChildNode(globe)
-
-        
-        var pyramind = Obstacle.PyramidNode()
-
-        mainScene.rootNode.addChildNode(pyramind)
-        
-        
-        var box = Obstacle.BoxNode()
-
-        mainScene.rootNode.addChildNode(box)
-        
-        var tube = Obstacle.TubeNode()
-        mainScene.rootNode.addChildNode(tube)
-        
-        var cylinder = Obstacle.CylinderNode()
-        mainScene.rootNode.addChildNode(cylinder)
-        
-        
-        var torus = Obstacle.TorusNode()
-        mainScene.rootNode.addChildNode(torus)
-        
+            var mainScene = SCNScene(named: "art.scnassets/hero.dae")
+            setupLighting(mainScene!)
+            setupCameras(mainScene!)
+            
+            return mainScene!
     }
     
-
+    
+    override func viewDidLoad() {
+             
+                super.viewDidLoad()
+                
+                let mainScene = createMainScene()
+                
+                mainScene.rootNode.addChildNode(setupFloor())
+                mainScene.rootNode.addChildNode(createStartingText())
+                
+                let sceneView = self.view as! SCNView
+                sceneView.scene = mainScene
+                
+                sceneView.showsStatistics = true
+                sceneView.allowsCameraControl = true
+                
+                
+                
+                var globe = Obstacle.GlobeNode()
+                mainScene.rootNode.addChildNode(globe)
+                
+                
+                var pyramind = Obstacle.PyramidNode()
+                mainScene.rootNode.addChildNode(pyramind)
+                
+                var box = Obstacle.BoxNode()
+                mainScene.rootNode.addChildNode(box)
+                
+                var tube = Obstacle.TubeNode()
+                mainScene.rootNode.addChildNode(tube)
+                
+                var cylinder = Obstacle.CylinderNode()
+                mainScene.rootNode.addChildNode(cylinder)
+                
+                var torus = Obstacle.TorusNode()
+                mainScene.rootNode.addChildNode(torus)
+                
+    }
+    
+    
     
     override func shouldAutorotate() -> Bool {
-        return true
+                    return true
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -142,16 +140,16 @@ class GameViewController: UIViewController {
     }
     
     override func supportedInterfaceOrientations() -> Int {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
-        } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
-        }
+                        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+        return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+    } else {
+        return Int(UIInterfaceOrientationMask.All.rawValue)
+                        }
     }
     
     override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
+                            super.didReceiveMemoryWarning()
+                            // Release any cached data, images, etc that aren't in use.
     }
-
+    
 }
