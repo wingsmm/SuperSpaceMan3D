@@ -37,7 +37,7 @@ class GameViewController: UIViewController {
         
         let textNode = SCNNode(geometry: startText)
         textNode.scale = SCNVector3Make(0.75, 0.75, 0.75)
-        textNode.position = SCNVector3Make(200, 0, 1000)
+        textNode.position = SCNVector3Make(200, 0, 500)
         
         return textNode
         
@@ -82,20 +82,52 @@ class GameViewController: UIViewController {
 
 
     override func viewDidLoad() {
+        
+        
+        
+        
+        
         super.viewDidLoad()
         
         
         let mainScene = createMainScene()
+        
+
         mainScene.rootNode.addChildNode(setupFloor())
         mainScene.rootNode.addChildNode(createStartingText())
-        mainScene.rootNode.addChildNode(Obstacle.PyramidNode())
+        
+        
         
         let sceneView = self.view as! SCNView
         sceneView.scene = mainScene
         
-        // Optional, but nice to be turned on during developement
         sceneView.showsStatistics = true
         sceneView.allowsCameraControl = true
+        
+        
+        
+        var globe = Obstacle.GlobeNode()
+        mainScene.rootNode.addChildNode(globe)
+
+        
+        var pyramind = Obstacle.PyramidNode()
+
+        mainScene.rootNode.addChildNode(pyramind)
+        
+        
+        var box = Obstacle.BoxNode()
+
+        mainScene.rootNode.addChildNode(box)
+        
+        var tube = Obstacle.TubeNode()
+        mainScene.rootNode.addChildNode(tube)
+        
+        var cylinder = Obstacle.CylinderNode()
+        mainScene.rootNode.addChildNode(cylinder)
+        
+        
+        var torus = Obstacle.TorusNode()
+        mainScene.rootNode.addChildNode(torus)
         
     }
     
