@@ -26,15 +26,21 @@ class Obstacle {
         pyramidNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blueColor()
         
         
-        /**
-        material
-        
-        :returns: <#return value description#>
-        */
         pyramidNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blueColor()
         pyramidNode.geometry?.firstMaterial?.specular.contents = UIColor.blueColor()
         pyramidNode.geometry?.firstMaterial?.shininess = 1.0
         
+        
+        pyramidNode.name = "pyramid"
+        
+        // Spin around the Y-Axis
+
+        let rotation = CABasicAnimation(keyPath: "rotation")
+        rotation.fromValue = NSValue(SCNVector4:SCNVector4Make(0, 0, 0, 0))
+        rotation.toValue = NSValue(SCNVector4:SCNVector4Make(0, 1, 0, Float(2.0 * M_PI)))
+        rotation.duration = 5
+        rotation.repeatCount = .infinity
+        pyramidNode.addAnimation(rotation, forKey: "rotation")
         
         return pyramidNode
     }
@@ -56,6 +62,26 @@ class Obstacle {
         globeNode.geometry?.firstMaterial?.specular.contents = UIImage(named: "earthSpecular.jpg")
         globeNode.geometry?.firstMaterial?.normal.contents = UIImage(named: "earthNormal.jpg")
         globeNode.geometry?.firstMaterial?.diffuse.mipFilter = SCNFilterMode.Linear
+        
+        
+        globeNode.name = "globe"
+
+        let rotation = CABasicAnimation(keyPath: "rotation")
+        
+        // Spin around the Y-Axis
+        rotation.fromValue = NSValue(SCNVector4:SCNVector4Make(0, 0, 0, 0))
+        rotation.toValue =  NSValue(SCNVector4:SCNVector4Make(0, 1, 0, Float(2.0*M_PI)))
+        rotation.duration = 10
+        rotation.repeatCount = .infinity
+        globeNode.addAnimation(rotation, forKey: "rotation")
+        
+        let moveGlobeUp = SCNAction.moveByX(0.0, y: 10.0, z: 0.0, duration: 1.0)
+        let moveGlobeDown = SCNAction.moveByX(0.0, y: -10.0, z: 0.0, duration: 1.0)
+        let sequence = SCNAction.sequence([moveGlobeUp, moveGlobeDown])
+        let repeateSequence = SCNAction.repeatActionForever(sequence)
+        globeNode.runAction(repeateSequence)
+
+        
         
         return globeNode
     }
@@ -83,8 +109,18 @@ class Obstacle {
         
         boxNode.geometry?.materials = materials
         
+        boxNode.name = "box"
+
+        // Spin around the z-Axis
+        let rotation = CABasicAnimation(keyPath: "rotation")
         
+        rotation.fromValue = NSValue(SCNVector4:SCNVector4Make(0, 0, 0, 0))
+        rotation.toValue =  NSValue(SCNVector4:SCNVector4Make(0, 0, 1, Float(2.0*M_PI)))
+        rotation.duration = 10
+        rotation.repeatCount = .infinity
+        boxNode.addAnimation(rotation, forKey: "rotation")
         
+
         
         return boxNode
         
@@ -103,6 +139,20 @@ class Obstacle {
         tubeNode.position = SCNVector3Make(-10, 0, -75)
         tubeNode.geometry?.firstMaterial?.diffuse.contents = UIColor.redColor()
         
+        
+        
+        tubeNode.name = "tube"
+        
+        let rotation = CABasicAnimation(keyPath: "rotation")
+        // Spin around the Z-Axis
+        rotation.fromValue = NSValue(SCNVector4:SCNVector4Make(0, 0, 0, 0))
+        rotation.toValue =  NSValue(SCNVector4:SCNVector4Make(0, 0, 1, Float(2.0*M_PI)))
+        rotation.duration = 5
+        rotation.repeatCount = .infinity
+        tubeNode.addAnimation(rotation, forKey: "rotation")
+
+
+        
         return tubeNode
         
     }
@@ -117,6 +167,21 @@ class Obstacle {
         cylinderNode.geometry?.firstMaterial?.diffuse.contents = UIColor.yellowColor()
         cylinderNode.geometry?.firstMaterial?.specular.contents = UIColor.yellowColor()
         cylinderNode.geometry?.firstMaterial?.shininess = 0.5
+        
+        
+        
+        cylinderNode.name = "cylinder"
+
+        let scaleToZero = SCNAction.scaleTo(0.0, duration: 0)
+        let scaleUp = SCNAction.scaleTo(1.0, duration: 5)
+        let opacityToZero = SCNAction.fadeOutWithDuration(5)
+        
+        let sequence = SCNAction.sequence([scaleToZero, scaleUp])
+        let repeateSequence = SCNAction.repeatAction(sequence, count: 10)
+        cylinderNode.runAction(repeateSequence)
+        
+        
+        
         return cylinderNode
         
     }

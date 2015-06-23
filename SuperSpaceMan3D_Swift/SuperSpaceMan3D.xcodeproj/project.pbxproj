@@ -15,6 +15,8 @@
 		1A34F7001B3650E2001B8476 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A34F6FE1B3650E2001B8476 /* LaunchScreen.xib */; };
 		1A34F70C1B3650E2001B8476 /* SuperSpaceMan3DTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A34F70B1B3650E2001B8476 /* SuperSpaceMan3DTests.swift */; };
 		1A34F74A1B36652E001B8476 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A34F7491B36652E001B8476 /* Obstacle.swift */; };
+		1A48FC661B37FB4A006F521C /* StartGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A48FC651B37FB4A006F521C /* StartGameViewController.swift */; };
+		1A7586201B38CD5600D87369 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A75861F1B38CD5600D87369 /* GameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		1A34F70A1B3650E2001B8476 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A34F70B1B3650E2001B8476 /* SuperSpaceMan3DTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperSpaceMan3DTests.swift; sourceTree = "<group>"; };
 		1A34F7491B36652E001B8476 /* Obstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
+		1A48FC651B37FB4A006F521C /* StartGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGameViewController.swift; sourceTree = "<group>"; };
+		1A75861F1B38CD5600D87369 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,12 +86,14 @@
 			isa = PBXGroup;
 			children = (
 				1A34F6F31B3650E1001B8476 /* AppDelegate.swift */,
-				1A34F6F51B3650E2001B8476 /* art.scnassets */,
+				1A48FC651B37FB4A006F521C /* StartGameViewController.swift */,
+				1A34F7491B36652E001B8476 /* Obstacle.swift */,
 				1A34F6F71B3650E2001B8476 /* GameViewController.swift */,
+				1A75861F1B38CD5600D87369 /* GameView.swift */,
+				1A34F6F51B3650E2001B8476 /* art.scnassets */,
 				1A34F6FC1B3650E2001B8476 /* Images.xcassets */,
 				1A34F6FE1B3650E2001B8476 /* LaunchScreen.xib */,
 				1A34F6F91B3650E2001B8476 /* Main.storyboard */,
-				1A34F7491B36652E001B8476 /* Obstacle.swift */,
 				1A34F6F11B3650E1001B8476 /* Supporting Files */,
 			);
 			path = SuperSpaceMan3D;
@@ -222,6 +228,8 @@
 				1A34F6F81B3650E2001B8476 /* GameViewController.swift in Sources */,
 				1A34F6F41B3650E1001B8476 /* AppDelegate.swift in Sources */,
 				1A34F74A1B36652E001B8476 /* Obstacle.swift in Sources */,
+				1A48FC661B37FB4A006F521C /* StartGameViewController.swift in Sources */,
+				1A7586201B38CD5600D87369 /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
