@@ -11,13 +11,27 @@ import QuartzCore
 import SceneKit
 import CoreMotion
 
+enum ColliderType: Int {
+    case Spaceman = 1
+    case Enemy = 2
+    case Obstacle = 4
+    case Wall = 8
+    
+    static var all = ColliderType.Spaceman.rawValue |
+        ColliderType.Enemy.rawValue |
+        ColliderType.Obstacle.rawValue |
+        ColliderType.Wall.rawValue
+}
 
-class GameViewController: UIViewController ,SCNSceneRendererDelegate{
+class GameViewController: UIViewController ,SCNSceneRendererDelegate,SCNPhysicsContactDelegate {
     
     var spotLight : SCNNode!
     var cameraNode: SCNNode!
     var spaceManNode: SCNNode!
+    var enemyNode: SCNNode!
 
+    
+    
     var motionManager: CMMotionManager!
     let spacemanSpeed = 50
 
@@ -25,17 +39,88 @@ class GameViewController: UIViewController ,SCNSceneRendererDelegate{
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    
 
-    func setupFloor() ->SCNNode {
+    func setupFloor(scene:SCNScene){
         var floorNode = SCNNode()
         var floor = SCNFloor()
         floorNode.geometry = floor
         floorNode.geometry!.firstMaterial!.diffuse.contents = "Floor"
-        return floorNode
+        scene.rootNode.addChildNode(floorNode)
+
     }
     
     
-    func createStartingText()->SCNNode {
+    func setupWalls(scene:SCNScene) {
+        
+        // WALLS!
+        var wall = SCNNode(geometry: SCNBox(width: 800, height: 400, length: 4, chamferRadius: 0))
+        wall.geometry!.firstMaterial!.diffuse.contents = "Wall"
+        wall.geometry!.firstMaterial!.diffuse.contentsTransform = SCNMatrix4Mult(SCNMatrix4MakeScale(24, 2, 1), SCNMatrix4MakeTranslation(0, 1, 0))
+        wall.geometry!.firstMaterial!.diffuse.wrapS = SCNWrapMode.Repeat
+        wall.geometry!.firstMaterial!.diffuse.wrapT = SCNWrapMode.Mirror
+        wall.geometry!.firstMaterial!.doubleSided = false
+        wall.geometry!.firstMaterial!.locksAmbientWithDiffuse = true
+        wall.castsShadow = false
+        wall.position = SCNVector3Make(0, 50, -92)
+        wall.physicsBody = SCNPhysicsBody()
+        wall.physicsBody!.type = .Static
+        wall.physicsBody!.categoryBitMask = ColliderType.Wall.rawValue
+        wall.physicsBody!.collisionBitMask = ColliderType.all
+        
+        scene.rootNode.addChildNode(wall)
+        
+        //Wall2
+        wall = wall.clone() as! SCNNode
+        wall.position = SCNVector3Make(-202, 50, 0)
+        wall.rotation = SCNVector4Make(0, 1, 0, Float(M_PI_2))
+        wall.physicsBody = SCNPhysicsBody()
+        wall.physicsBody!.type = .Static
+        wall.physicsBody!.categoryBitMask = ColliderType.Wall.rawValue
+        wall.physicsBody!.collisionBitMask = ColliderType.all
+        
+        scene.rootNode.addChildNode(wall)
+        
+        //Wall3
+        wall = wall.clone() as! SCNNode
+        wall.position = SCNVector3Make(202, 50, 0)
+        wall.rotation = SCNVector4Make(0, 1, 0, Float(-M_PI_2))
+        wall.physicsBody = SCNPhysicsBody()
+        wall.physicsBody!.type = .Static
+        wall.physicsBody!.categoryBitMask = ColliderType.Wall.rawValue
+        wall.physicsBody!.collisionBitMask = ColliderType.all
+        
+        scene.rootNode.addChildNode(wall)
+        
+        //backwall
+        var backWall = SCNNode(geometry: SCNPlane(width: 800, height: 400))
+        backWall.geometry!.firstMaterial = wall.geometry!.firstMaterial
+        backWall.position = SCNVector3Make(0, 50, 200)
+        backWall.rotation = SCNVector4Make(1, 0, 0, Float(M_PI))
+        backWall.castsShadow = false
+        backWall.physicsBody = SCNPhysicsBody()
+        backWall.physicsBody!.type = .Static
+        wall.physicsBody!.categoryBitMask = ColliderType.Wall.rawValue
+        wall.physicsBody!.collisionBitMask = ColliderType.all
+        
+        scene.rootNode.addChildNode(backWall)
+        
+        var ceilNode = SCNNode(geometry: SCNPlane(width: 800, height: 400))
+        ceilNode.position = SCNVector3Make(0, 100, 0)
+        ceilNode.rotation = SCNVector4Make(1, 0, 0, Float(M_PI_2))
+        ceilNode.geometry!.firstMaterial!.doubleSided = false
+        ceilNode.geometry!.firstMaterial!.locksAmbientWithDiffuse = true
+        ceilNode.castsShadow = false
+        wall.physicsBody!.categoryBitMask = ColliderType.Wall.rawValue
+        wall.physicsBody!.collisionBitMask = ColliderType.all
+        
+        scene.rootNode.addChildNode(ceilNode)
+    }
+
+    
+    
+    func setupStartingText(scene:SCNScene) {
         
         
         let startText = SCNText(string: "Start!", extrusionDepth: 5)
@@ -50,7 +135,7 @@ class GameViewController: UIViewController ,SCNSceneRendererDelegate{
         textNode.scale = SCNVector3Make(0.75, 0.75, 0.75)
         textNode.position = SCNVector3Make(200, 0, 500)
         
-        return textNode
+        scene.rootNode.addChildNode(textNode);
         
     }
     
@@ -94,6 +179,18 @@ class GameViewController: UIViewController ,SCNSceneRendererDelegate{
         return spaceManNode!
     }
 
+    func setupEnemy(scene:SCNScene) -> SCNNode {
+        
+        var enemyScene = SCNScene(named: "art.scnassets/enemy.dae")
+        var enemyNode = enemyScene!.rootNode.childNodeWithName("enemy", recursively: false)
+        enemyNode!.name = "enemy"
+        enemyNode!.position = SCNVector3Make(40, 10, 30)
+        enemyNode!.rotation = SCNVector4Make(0, 1, 0, Float(M_PI))
+        scene.rootNode.addChildNode(enemyNode!)
+        
+        return enemyNode!
+    }
+
     
     func setupCameras(scene:SCNScene) {
         cameraNode = SCNNode()
@@ -132,8 +229,28 @@ class GameViewController: UIViewController ,SCNSceneRendererDelegate{
     func createMainScene () ->SCNScene {
         var mainScene = SCNScene()
         setupLighting(mainScene)
-        setupCameras(mainScene)
+        setupFloor(mainScene)
+        setupWalls(mainScene)
+        setupStartingText(mainScene)
+
+
+        
+        
         spaceManNode = setupSpaceMan(mainScene)
+        
+        spaceManNode!.physicsBody = SCNPhysicsBody(type: .Dynamic, shape: nil)
+        spaceManNode!.physicsBody!.categoryBitMask = ColliderType.Spaceman.rawValue
+        spaceManNode!.physicsBody!.collisionBitMask = ColliderType.Enemy.rawValue | ColliderType.Obstacle.rawValue
+        spaceManNode.physicsBody!.mass = 1
+
+        enemyNode =  setupEnemy(mainScene)
+        enemyNode!.physicsBody = SCNPhysicsBody(type: .Dynamic, shape: nil)
+        enemyNode!.physicsBody!.categoryBitMask = ColliderType.Enemy.rawValue
+        enemyNode!.physicsBody!.collisionBitMask = ColliderType.Spaceman.rawValue
+        enemyNode.physicsBody?.mass = 1
+
+        
+        setupCameras(mainScene)
         setupObstacles(mainScene)
 
         return mainScene
@@ -147,22 +264,19 @@ class GameViewController: UIViewController ,SCNSceneRendererDelegate{
         
         let mainScene = createMainScene()
         
-        mainScene.rootNode.addChildNode(setupFloor())
-        mainScene.rootNode.addChildNode(createStartingText())
-        
         let sceneView = self.view as! SCNView
         sceneView.scene = mainScene
-        
         sceneView.showsStatistics = true
-//        sceneView.allowsCameraControl = true
+        sceneView.allowsCameraControl = true
         sceneView.pointOfView = cameraNode
 
-        
-        sceneView.delegate = self
 
         setupAccelerometer()
-
         
+        
+        sceneView.delegate = self
+        sceneView.scene!.physicsWorld.speed = 5.0
+        sceneView.scene!.physicsWorld.contactDelegate = self
     }
     
     
@@ -286,6 +400,28 @@ class GameViewController: UIViewController ,SCNSceneRendererDelegate{
                 }
             }
         }
+    }
+    
+    
+    
+    //MARK: Contact delegate
+    func physicsWorld(world: SCNPhysicsWorld, didBeginContact contact: SCNPhysicsContact) {
+        println("Started contact")
+        
+        var collisionDetaction = contact.nodeA.categoryBitMask | contact.nodeB.categoryBitMask
+        
+        if collisionDetaction ==  ColliderType.all {
+            
+            println("touched something--------")
+        }
+    }
+    
+    func physicsWorld(world: SCNPhysicsWorld, didEndContact contact: SCNPhysicsContact) {
+        println("Physics ---  END-----!!")
+    }
+    
+    func physicsWorld(world: SCNPhysicsWorld, didUpdateContact contact: SCNPhysicsContact) {
+        println("Physics ---  update!!")
     }
 
     

@@ -31,10 +31,17 @@ class Obstacle {
         pyramidNode.geometry?.firstMaterial?.shininess = 1.0
         
         
+        
+        pyramidNode.physicsBody = SCNPhysicsBody()
+        pyramidNode.physicsBody?.type = .Dynamic
+        pyramidNode.physicsBody?.categoryBitMask = ColliderType.Obstacle.rawValue
+        pyramidNode.physicsBody?.collisionBitMask = ColliderType.all
+        
+        
         pyramidNode.name = "pyramid"
         
         // Spin around the Y-Axis
-
+        
         let rotation = CABasicAnimation(keyPath: "rotation")
         rotation.fromValue = NSValue(SCNVector4:SCNVector4Make(0, 0, 0, 0))
         rotation.toValue = NSValue(SCNVector4:SCNVector4Make(0, 1, 0, Float(2.0 * M_PI)))
@@ -64,8 +71,13 @@ class Obstacle {
         globeNode.geometry?.firstMaterial?.diffuse.mipFilter = SCNFilterMode.Linear
         
         
+        globeNode.physicsBody = SCNPhysicsBody()
+        globeNode.physicsBody?.type = .Dynamic
+        globeNode.physicsBody?.categoryBitMask = ColliderType.Obstacle.rawValue
+        globeNode.physicsBody?.collisionBitMask = ColliderType.all
+        
         globeNode.name = "globe"
-
+        
         let rotation = CABasicAnimation(keyPath: "rotation")
         
         // Spin around the Y-Axis
@@ -80,7 +92,7 @@ class Obstacle {
         let sequence = SCNAction.sequence([moveGlobeUp, moveGlobeDown])
         let repeateSequence = SCNAction.repeatActionForever(sequence)
         globeNode.runAction(repeateSequence)
-
+        
         
         
         return globeNode
@@ -109,8 +121,18 @@ class Obstacle {
         
         boxNode.geometry?.materials = materials
         
+        boxNode.physicsBody = SCNPhysicsBody()
+        boxNode.physicsBody?.type = .Dynamic
+        boxNode.physicsBody?.categoryBitMask = ColliderType.Obstacle.rawValue
+        boxNode.physicsBody?.collisionBitMask = ColliderType.all
+        
+        
+        
+        
+        
+        
         boxNode.name = "box"
-
+        
         // Spin around the z-Axis
         let rotation = CABasicAnimation(keyPath: "rotation")
         
@@ -120,7 +142,7 @@ class Obstacle {
         rotation.repeatCount = .infinity
         boxNode.addAnimation(rotation, forKey: "rotation")
         
-
+        
         
         return boxNode
         
@@ -141,6 +163,12 @@ class Obstacle {
         
         
         
+        tubeNode.physicsBody = SCNPhysicsBody(type: .Dynamic, shape: nil)
+        //        tubeNode.physicsBody?.type = .Dynamic
+        tubeNode.physicsBody?.categoryBitMask = ColliderType.Obstacle.rawValue
+        tubeNode.physicsBody?.collisionBitMask = ColliderType.all
+        
+        
         tubeNode.name = "tube"
         
         let rotation = CABasicAnimation(keyPath: "rotation")
@@ -150,8 +178,8 @@ class Obstacle {
         rotation.duration = 5
         rotation.repeatCount = .infinity
         tubeNode.addAnimation(rotation, forKey: "rotation")
-
-
+        
+        
         
         return tubeNode
         
@@ -170,8 +198,13 @@ class Obstacle {
         
         
         
+        cylinderNode.geometry?.firstMaterial?.diffuse.contents = UIColor.yellowColor()
+        cylinderNode.geometry?.firstMaterial?.specular.contents = UIColor.yellowColor()
+        cylinderNode.geometry?.firstMaterial?.shininess = 0.5
+        
+        
         cylinderNode.name = "cylinder"
-
+        
         let scaleToZero = SCNAction.scaleTo(0.0, duration: 0)
         let scaleUp = SCNAction.scaleTo(1.0, duration: 5)
         let opacityToZero = SCNAction.fadeOutWithDuration(5)
@@ -191,16 +224,23 @@ class Obstacle {
     */
     
     class  func TorusNode() -> SCNNode {
-            
-            let torus = SCNTorus(ringRadius: 12, pipeRadius: 5)
-            let torusNode = SCNNode(geometry: torus)
-            torusNode.position = SCNVector3Make(50, 10, -50)
-            torusNode.geometry?.firstMaterial?.diffuse.contents = UIColor.redColor()
-            torusNode.geometry?.firstMaterial?.specular.contents = UIColor.blackColor()
-            torusNode.geometry?.firstMaterial?.shininess = 0.75
-            
-            return torusNode
-            
+        
+        let torus = SCNTorus(ringRadius: 12, pipeRadius: 5)
+        let torusNode = SCNNode(geometry: torus)
+        torusNode.position = SCNVector3Make(50, 10, -50)
+        torusNode.geometry?.firstMaterial?.diffuse.contents = UIColor.redColor()
+        torusNode.geometry?.firstMaterial?.specular.contents = UIColor.blackColor()
+        torusNode.geometry?.firstMaterial?.shininess = 0.75
+        
+        
+        torusNode.physicsBody = SCNPhysicsBody()
+        torusNode.physicsBody?.type = .Dynamic
+        torusNode.physicsBody?.categoryBitMask = ColliderType.Obstacle.rawValue
+        torusNode.physicsBody?.collisionBitMask = ColliderType.all
+        
+        
+        return torusNode
+        
     }
     
     
